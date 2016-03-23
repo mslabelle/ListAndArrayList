@@ -11,15 +11,19 @@ public class GroceryList {
     private ArrayList<String> groceryList = new ArrayList<String>();
 
     public void addGroceryItem(String item){
-        groceryList.add(item);
-        System.out.println(item + " has been added to your grocery list.");
+        if (scanList(item) == null) {
+            groceryList.add(item.toLowerCase());
+            System.out.println(item + " has been added to your grocery list.");
+        }
+        else
+            System.out.println(item + " is already on your grocery list.");
     }
 
     public void printGroceryList(){
-        System.out.println("There are " + groceryList.size() + " items in your grocery list.\n\nNamely: \r");
+        System.out.println("There are " + groceryList.size() + " items in your grocery list.");
 
         for (int i=0;i<groceryList.size();i++){
-            System.out.println("\t" + (i+1) + ") " + groceryList.get(i));
+            System.out.println("\t" + (i+1) + ") " + groceryList.get(i).toUpperCase());
         }
     }
 
@@ -47,5 +51,17 @@ public class GroceryList {
 
     public int listOfGroceries(){
         return groceryList.size();
+    }
+
+    public String scanList(String item){
+        boolean exists = groceryList.contains(item.toLowerCase());
+        int position = -1;
+
+        if (exists) {
+            position = groceryList.indexOf(item);
+            return groceryList.get(position);
+        }
+
+        return null;
     }
 }
