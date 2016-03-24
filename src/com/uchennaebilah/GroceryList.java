@@ -11,7 +11,7 @@ public class GroceryList {
     private ArrayList<String> groceryList = new ArrayList<String>();
 
     public void addGroceryItem(String item){
-        if (scanList(item) == null) {
+        if (scanList(item) < 0) {
             groceryList.add(item.toLowerCase());
             System.out.println(item + " has been added to your grocery list.");
         }
@@ -27,7 +27,18 @@ public class GroceryList {
         }
     }
 
-    public void modifyGroceryList(int number, String newItem){
+    public void modifyGroceryList(String newItem){
+        int element = scanList(newItem);
+
+        if (element >=0){
+            modifyGroceryList(element,newItem);
+        }
+        else {
+            System.out.println(newItem + " is not in your grocery list.");
+        }
+    }
+
+    private void modifyGroceryList(int number, String newItem){
         if (number == -1) {
             System.out.println("No such corresponding item number.");
             addGroceryItem(newItem);
@@ -35,6 +46,17 @@ public class GroceryList {
         else {
             groceryList.set(number,newItem);
             System.out.println("Grocery list item " + (number + 1) + " has been modified.");
+        }
+    }
+
+    public void removeGroceryItem(String newItem){
+        int element = scanList(newItem);
+
+        if (element >=0){
+            removeGroceryItem(element);
+        }
+        else {
+            System.out.println(newItem + " is not in your grocery list.");
         }
     }
 
@@ -53,15 +75,7 @@ public class GroceryList {
         return groceryList.size();
     }
 
-    public String scanList(String item){
-        boolean exists = groceryList.contains(item.toLowerCase());
-        int position = -1;
-
-        if (exists) {
-            position = groceryList.indexOf(item);
-            return groceryList.get(position);
-        }
-
-        return null;
+    public int scanList(String item){
+        return groceryList.indexOf(item.toLowerCase());
     }
 }
